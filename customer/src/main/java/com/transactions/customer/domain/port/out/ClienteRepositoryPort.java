@@ -1,5 +1,7 @@
 package com.transactions.customer.domain.port.out;
 
+import java.util.Optional;
+
 import com.transactions.customer.domain.model.Cliente;
 
 public interface ClienteRepositoryPort {
@@ -9,5 +11,5 @@ public interface ClienteRepositoryPort {
 
     void delete(String id);
 
-    Cliente findById(String id);
+    Optional<Cliente> findById(String id);
 }

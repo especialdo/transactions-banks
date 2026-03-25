@@ -33,7 +33,7 @@ public class PersonaEntity {
 
     private Integer edad;
 
-    @Column(nullable = true, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 50)
     private String identificacion;
 
     @Column(length = 150)

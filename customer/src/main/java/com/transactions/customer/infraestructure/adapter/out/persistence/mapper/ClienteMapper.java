@@ -16,7 +16,7 @@ public interface ClienteMapper {
     @Mapping(target = "estado", source = "estado")
     @Mapping(target = "genero", ignore = true)
     @Mapping(target = "edad", ignore = true)
-    @Mapping(target = "identificacion", ignore = true)
+    @Mapping(target = "identificacion", source = "identificacion")
     ClienteEntity toEntity(Cliente domain);
 
     @Mapping(target = "clienteId", source = "id")

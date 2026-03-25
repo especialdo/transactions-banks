@@ -1,7 +1,10 @@
 package com.transactions.customer.infraestructure.adapter.out.persistence;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
+import com.transactions.customer.domain.exception.ResourceNotFoundException;
 import com.transactions.customer.domain.model.Cliente;
 import com.transactions.customer.domain.port.out.ClienteRepositoryPort;
 import com.transactions.customer.infraestructure.adapter.out.persistence.entities.ClienteEntity;
@@ -26,7 +29,18 @@ public class CustomerAdapter implements ClienteRepositoryPort {
 
     @Override
     public Cliente update(String id, Cliente command) {
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        ClienteEntity entity = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con id: " + id));
+
+        entity.setNombre(command.getNombre());
+        entity.setDireccion(command.getDireccion());
+        entity.setTelefono(command.getTelefono());
+        entity.setContrasena(command.getContrasena());
+        entity.setEstado(command.getEstado());
+        entity.setIdentificacion(command.getIdentificacion());
+
+        ClienteEntity updated = customerRepository.save(entity);
+        return mapper.toDomain(updated);
     }
 
     @Override
@@ -35,9 +49,9 @@ public class CustomerAdapter implements ClienteRepositoryPort {
     }
 
     @Override
-    public Cliente findById(String id) {
+    public Optional<Cliente> findById(String id) {
         ClienteEntity find = customerRepository.findById(id).orElse(null);
-        return mapper.toDomain(find);
+        return Optional.ofNullable(mapper.toDomain(find));
     }
 
 }

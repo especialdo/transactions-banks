@@ -1,6 +1,6 @@
-package com.transactions.customer.application.command;
+package com.transactions.customer.infraestructure.adapter.in.rest;
 
-public record CreateClientCommand(
+public record UpdateClienteRequest(
         String identificacion,
         String nombre,
         String direccion,

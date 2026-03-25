@@ -6,6 +6,7 @@ import com.transactions.customer.application.command.CreateClientCommand;
 import com.transactions.customer.application.command.UpdateClientCommand;
 import com.transactions.customer.application.mapper.ClienteAppMapper;
 import com.transactions.customer.application.use_case.service.ClienteUseCase;
+import com.transactions.customer.domain.exception.ResourceNotFoundException;
 import com.transactions.customer.domain.model.Cliente;
 import com.transactions.customer.domain.port.out.ClienteRepositoryPort;
 
@@ -26,9 +27,9 @@ public class ClienteService implements ClienteUseCase {
     }
 
     @Override
-    public Cliente update(String id, UpdateClientCommand cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public Cliente update(String id, UpdateClientCommand command) {
+        Cliente cliente = mapper.updatetoDomain(command);
+        return clienteRepository.update(id, cliente);
     }
 
     @Override
@@ -38,7 +39,8 @@ public class ClienteService implements ClienteUseCase {
 
     @Override
     public Cliente findById(String id) {
-        return clienteRepository.findById(id);
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con id: " + id));
     }
 
 }
