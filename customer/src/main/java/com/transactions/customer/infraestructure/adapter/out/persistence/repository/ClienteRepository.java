@@ -3,9 +3,9 @@ package com.transactions.customer.infraestructure.adapter.out.persistence.reposi
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.transactions.customer.domain.model.Cliente;
+import com.transactions.customer.infraestructure.adapter.out.persistence.entities.ClienteEntity;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, String> {
+public interface ClienteRepository extends JpaRepository<ClienteEntity, String> {
 
 }

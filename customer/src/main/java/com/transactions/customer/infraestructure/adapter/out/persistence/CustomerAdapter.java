@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 
 import com.transactions.customer.domain.model.Cliente;
 import com.transactions.customer.domain.port.out.ClienteRepositoryPort;
+import com.transactions.customer.infraestructure.adapter.out.persistence.entities.ClienteEntity;
+import com.transactions.customer.infraestructure.adapter.out.persistence.mapper.ClienteMapper;
 import com.transactions.customer.infraestructure.adapter.out.persistence.repository.ClienteRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -13,15 +15,17 @@ import lombok.RequiredArgsConstructor;
 public class CustomerAdapter implements ClienteRepositoryPort {
 
     private final ClienteRepository customerRepository;
+    private final ClienteMapper mapper;
 
     @Override
     public Cliente create(Cliente command) {
-        return customerRepository.save(command);
+        ClienteEntity entity = mapper.toEntity(command);
+        ClienteEntity persist = customerRepository.save(entity);
+        return mapper.toDomain(persist);
     }
 
     @Override
     public Cliente update(String id, Cliente command) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
@@ -32,7 +36,8 @@ public class CustomerAdapter implements ClienteRepositoryPort {
 
     @Override
     public Cliente findById(String id) {
-        return customerRepository.findById(id).orElse(null);
+        ClienteEntity find = customerRepository.findById(id).orElse(null);
+        return mapper.toDomain(find);
     }
 
 }
