@@ -26,7 +26,7 @@ public class ClienteController {
     private final ClienteUseCase clienteUseCase;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse> transfer(@RequestBody @Valid ClienteRequest request) {
+    public ResponseEntity<SuccessResponse> crear(@RequestBody @Valid ClienteRequest request) {
         Cliente cliente = clienteUseCase.create(mapper.toCommand(request));
 
         return ResponseEntity
