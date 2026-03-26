@@ -11,5 +11,5 @@ public class ClienteEvent {
     private String clienteId;
     private String nombre;
     private Boolean estado;
-    private String accion; // crear o eliminar
+    private String accion; // crear, actualizar eliminar
 }
