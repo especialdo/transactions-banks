@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "movimiento")
+@Table(name = "movimientos")
 @Getter
 @Setter
 public class MovimientoEntity {

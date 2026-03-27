@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.transactions.bankaccounts.domain.enums.EstadoCuenta;
 import com.transactions.bankaccounts.domain.enums.TipoCuenta;
 
 import jakarta.persistence.CascadeType;
@@ -22,7 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "cuenta")
+@Table(name = "cuentas")
 @Getter
 @Setter
 public class CuentaEntity {
@@ -40,8 +39,7 @@ public class CuentaEntity {
     @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal saldo;
 
-    @Enumerated(EnumType.STRING)
-    private EstadoCuenta estado;
+    private Boolean estado;
 
     @Column(nullable = false)
     private String clienteId;

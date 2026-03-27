@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.transactions.bankaccounts.domain.model.Cuenta;
 import com.transactions.bankaccounts.domain.port.out.CuentaRepositoryPort;
+import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.entities.CuentaEntity;
+import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.mapper.CuentaMapper;
+import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.repository.CuentaRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,22 +17,29 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CuentaAdapterPersistence implements CuentaRepositoryPort {
 
+    private final CuentaRepository repository;
+    private final CuentaMapper mapper;
+
     @Override
     public Cuenta guardar(Cuenta cuenta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'guardar'");
+        CuentaEntity ce = mapper.toEntity(cuenta);
+        CuentaEntity cePersist = repository.save(ce);
+        return mapper.toDomain(cePersist);
     }
 
     @Override
     public Optional<Cuenta> buscarPorNumeroCuenta(String numeroCuenta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarPorNumeroCuenta'");
+        return repository
+                .findByNumeroCuenta(numeroCuenta)
+                .map(mapper::toDomain);
     }
 
     @Override
     public List<Cuenta> buscarPorClienteId(String clienteId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarPorClienteId'");
+        return repository.findByClienteId(clienteId)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 
 }

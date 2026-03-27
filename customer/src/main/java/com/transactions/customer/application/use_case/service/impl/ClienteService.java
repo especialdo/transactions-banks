@@ -29,7 +29,7 @@ public class ClienteService implements ClienteUseCase {
         Cliente cliente = mapper.toDomain(command);
         Cliente saved = clienteRepository.create(cliente);
 
-        // Publicar evento en Kafka
+        // TODO: corregir esto
         ClienteEvent event = new ClienteEvent(
                 saved.getClienteId(),
                 saved.getNombre(),

@@ -42,7 +42,6 @@ public class MovimientoController {
             @RequestParam LocalDate fechaInicio,
             @RequestParam LocalDate fechaFin) {
 
-        // convertir a MovimientoReporteResponse
         return ResponseEntity
                 .ok(mapper.toListResponse(obtenerReporteUseCase.ejecutar(clienteId, fechaInicio, fechaFin)));
     }
