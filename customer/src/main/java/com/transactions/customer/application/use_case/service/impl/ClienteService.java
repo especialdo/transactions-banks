@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.transactions.customer.application.command.CreateClientCommand;
 import com.transactions.customer.application.command.UpdateClientCommand;
-import com.transactions.customer.application.dtos.ClienteEvent;
 import com.transactions.customer.application.mapper.ClienteAppMapper;
 import com.transactions.customer.application.use_case.service.ClienteUseCase;
+import com.transactions.customer.domain.dto.ClienteEvent;
 import com.transactions.customer.domain.exception.ResourceNotFoundException;
 import com.transactions.customer.domain.model.Cliente;
 import com.transactions.customer.domain.port.out.ClienteRepositoryPort;
