@@ -81,6 +81,44 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
+  bankaccounts-service:
+    image: localhost/bankaccounts-service:latest
+    container_name: bankaccounts-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_APPLICATION_NAME: bankaccounts
+      SERVER_PORT: 8082
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bankaccounts_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+      SPRING_JPA_SHOW_SQL: "false"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+      SPRING_KAFKA_PRODUCER_KEY_SERIALIZER: org.apache.kafka.common.serialization.StringSerializer
+      SPRING_KAFKA_PRODUCER_VALUE_SERIALIZER: org.springframework.kafka.support.serializer.JsonSerializer
+
+      SPRING_KAFKA_CONSUMER_GROUP_ID: cuentas-group
+      SPRING_KAFKA_CONSUMER_AUTO_OFFSET_RESET: earliest
+      SPRING_KAFKA_CONSUMER_KEY_DESERIALIZER: org.apache.kafka.common.serialization.StringDeserializer
+      SPRING_KAFKA_CONSUMER_VALUE_DESERIALIZER: org.springframework.kafka.support.serializer.JsonDeserializer
+      SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES: "*"
+      SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_VALUE_DEFAULT_TYPE: com.transactions.bankaccounts.infraestructure.adapter.in.kafka.ClienteTopic
+      SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_USE_TYPE_HEADERS: "false"
+
+      SPRING_KAFKA_ADMIN_AUTO_CREATE: "true"
+
 
 volumes:
   kafka_data:

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.transactions.bankaccounts.application.use_case.CuentaUseCase;
 import com.transactions.bankaccounts.domain.model.Cuenta;
 import com.transactions.bankaccounts.infraestructure.adapter.in.rest.mapper.CuentaRestMapper;
-import com.transactions.bankaccounts.infraestructure.adapter.in.rest.mapper.MovimientoRestMapper;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

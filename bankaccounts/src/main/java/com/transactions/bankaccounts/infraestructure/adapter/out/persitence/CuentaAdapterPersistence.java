@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.transactions.bankaccounts.domain.model.Cuenta;
 import com.transactions.bankaccounts.domain.port.out.CuentaRepositoryPort;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.entities.CuentaEntity;
-import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.mapper.CuentaMapper;
+import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.mapper.CuentaPersistenceMapper;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.repository.CuentaRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class CuentaAdapterPersistence implements CuentaRepositoryPort {
 
     private final CuentaRepository repository;
-    private final CuentaMapper mapper;
+    private final CuentaPersistenceMapper mapper;
 
     @Override
     public Cuenta guardar(Cuenta cuenta) {
