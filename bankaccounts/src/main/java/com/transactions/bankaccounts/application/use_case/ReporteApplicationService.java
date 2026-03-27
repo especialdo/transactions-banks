@@ -3,8 +3,6 @@ package com.transactions.bankaccounts.application.use_case;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 
 import com.transactions.bankaccounts.application.dto.MovimientoReporte;
@@ -12,8 +10,6 @@ import com.transactions.bankaccounts.domain.model.Cuenta;
 import com.transactions.bankaccounts.domain.model.Movimiento;
 import com.transactions.bankaccounts.domain.port.out.CuentaRepositoryPort;
 import com.transactions.bankaccounts.domain.port.out.MovimientoRepositoryPort;
-import com.transactions.bankaccounts.infraestructure.adapter.in.rest.MovimientoReporteResponse;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -43,13 +39,13 @@ public class ReporteApplicationService implements ObtenerReporteUseCase {
                             .cliente(cliente)
                             .numeroCuenta(cuenta.getNumeroCuenta())
                             .tipo(cuenta.getTipoCuenta())
-                            .saldoInicial(cuenta.getSaldo().subtract(m.getValor()))
+                            .saldoInicial(m.getSaldo().subtract(m.getValor()))
                             .estado(cuenta.getEstado())
                             .movimiento(m.getValor())
                             .saldoDisponible(m.getSaldo())
                             .build());
                 })
                 .sorted(Comparator.comparing(MovimientoReporte::getFecha).reversed())
-                .collect(Collectors.toList());
+                .toList();
     }
 }

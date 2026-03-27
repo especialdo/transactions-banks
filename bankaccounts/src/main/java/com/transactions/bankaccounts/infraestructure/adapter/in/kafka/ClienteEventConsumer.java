@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class ClienteEventConsumer {
     private final ClienteSrincronizeUseCase clientUseCase;
 
-    @KafkaListener(topics = "clientes-topic", groupId = "bankaccount-group", containerFactory = "clienteKafkaListenerFactory")
+    @KafkaListener(topics = "clientes-topic")
     public void consumeClienteEvent(ClienteTopic event) {
         if ("CREAR".equals(event.getAccion())) {
             ClientSincronize c = ClientSincronize.builder()
@@ -21,10 +21,8 @@ public class ClienteEventConsumer {
                     .nombre(event.getNombre())
                     .build();
             clientUseCase.save(c);
-            System.out.println("Cliente agregado: " + event.getClienteId());
         } else if ("ELIMINAR".equals(event.getAccion())) {
             clientUseCase.delete(event.getClienteId());
-            System.out.println("Cliente eliminado: " + event.getClienteId());
         }
     }
 

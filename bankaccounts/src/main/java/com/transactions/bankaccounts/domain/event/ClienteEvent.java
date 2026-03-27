@@ -1,4 +1,4 @@
-package com.transactions.bankaccounts.domain.port.out;
+package com.transactions.bankaccounts.domain.event;
 
 import com.transactions.bankaccounts.domain.enums.TipoClienteEvento;
 

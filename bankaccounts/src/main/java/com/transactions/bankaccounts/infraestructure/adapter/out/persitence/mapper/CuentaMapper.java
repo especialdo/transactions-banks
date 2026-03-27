@@ -1,33 +1,14 @@
 package com.transactions.bankaccounts.infraestructure.adapter.out.persitence.mapper;
 
-import java.util.UUID;
-
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
 import com.transactions.bankaccounts.domain.model.Cuenta;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.entities.CuentaEntity;
 
-@Component
-public class CuentaMapper {
-    public Cuenta toDomain(CuentaEntity entity) {
-        Cuenta cuenta = new Cuenta();
-        cuenta.setId(entity.getId());
-        cuenta.setClienteId(entity.getClienteId());
-        cuenta.setNumeroCuenta(entity.getNumeroCuenta());
-        cuenta.setTipoCuenta(entity.getTipoCuenta());
-        cuenta.setSaldo(entity.getSaldo());
-        cuenta.setEstado(entity.getEstado());
-        return cuenta;
-    }
+@Mapper(componentModel = "spring")
+public interface CuentaMapper {
 
-    public CuentaEntity toEntity(Cuenta domain) {
-        CuentaEntity entity = new CuentaEntity();
-        entity.setId(domain.getId());
-        entity.setNumeroCuenta(domain.getNumeroCuenta());
-        entity.setTipoCuenta(domain.getTipoCuenta());
-        entity.setSaldo(domain.getSaldo());
-        entity.setEstado(domain.getEstado());
-        entity.setClienteId(domain.getClienteId());
-        return entity;
-    }
+    Cuenta toDomain(CuentaEntity entity);
+
+    CuentaEntity toEntity(Cuenta domain);
 }

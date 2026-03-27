@@ -2,6 +2,7 @@ package com.transactions.bankaccounts.infraestructure.adapter.out.persitence;
 
 import org.springframework.stereotype.Component;
 
+import com.transactions.bankaccounts.application.exception.ClienteNoEncontradoException;
 import com.transactions.bankaccounts.domain.port.out.ClienteSrincronizeRepositoryPort;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.entities.ClientSincronizeEntity;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.repository.ClienteSincronizeRepository;
@@ -36,7 +37,8 @@ public class ClienteSrincronizeAdapter implements ClienteSrincronizeRepositoryPo
 
     @Override
     public String findNombeClient(String id) {
-        ClientSincronizeEntity c = repository.findByClienteId(id).orElseThrow(null);
+        ClientSincronizeEntity c = repository.findByClienteId(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + id));
         return c.getNombre();
     }
 
