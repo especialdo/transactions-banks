@@ -50,8 +50,7 @@ public class CustomerAdapter implements ClienteRepositoryPort {
 
     @Override
     public Optional<Cliente> findById(String id) {
-        ClienteEntity find = customerRepository.findById(id).orElse(null);
-        return Optional.ofNullable(mapper.toDomain(find));
+        return customerRepository.findById(id).map(mapper::toDomain);
     }
 
 }
