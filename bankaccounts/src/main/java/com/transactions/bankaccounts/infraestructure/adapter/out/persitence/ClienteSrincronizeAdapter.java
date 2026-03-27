@@ -2,11 +2,11 @@ package com.transactions.bankaccounts.infraestructure.adapter.out.persitence;
 
 import org.springframework.stereotype.Component;
 
-import com.transactions.bankaccounts.application.exception.ClienteNoEncontradoException;
 import com.transactions.bankaccounts.domain.port.out.ClienteSrincronizeRepositoryPort;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.entities.ClientSincronizeEntity;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.repository.ClienteSincronizeRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -26,8 +26,9 @@ public class ClienteSrincronizeAdapter implements ClienteSrincronizeRepositoryPo
     }
 
     @Override
+    @Transactional
     public void delete(String id) {
-        repository.deleteById(id);
+        repository.deleteByClienteId(id);
     }
 
     @Override

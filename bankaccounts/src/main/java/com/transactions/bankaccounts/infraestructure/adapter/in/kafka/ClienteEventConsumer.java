@@ -12,8 +12,9 @@ import lombok.RequiredArgsConstructor;
 public class ClienteEventConsumer {
     private final ClienteSrincronizeUseCase clientUseCase;
 
-    @KafkaListener(topics = "clientes-topic")
+    @KafkaListener(topics = "clientes-topic", groupId = "bankaccounts-group")
     public void consumeClienteEvent(ClienteTopic event) {
+        System.out.println("🔥 RAW EVENTO: " + event);
         if ("CREAR".equals(event.getAccion())) {
             ClientSincronize c = ClientSincronize.builder()
                     .clienteId(event.getClienteId())
