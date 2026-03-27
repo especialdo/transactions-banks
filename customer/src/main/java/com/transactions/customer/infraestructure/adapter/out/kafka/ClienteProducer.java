@@ -14,10 +14,6 @@ import lombok.RequiredArgsConstructor;
 public class ClienteProducer implements CustomerEventPublisherPort {
     private final KafkaTemplate<String, ClienteEvent> kafkaTemplate;
 
-    public void sendClienteEvent(ClienteEvent event) {
-        kafkaTemplate.send("clientes-topic", event.getClienteId(), event);
-    }
-
     @Override
     public void publicarCliente(ClienteEvent event) {
         kafkaTemplate.send("clientes-topic", event.getClienteId(), event);

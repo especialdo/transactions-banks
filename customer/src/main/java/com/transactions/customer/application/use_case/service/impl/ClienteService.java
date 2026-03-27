@@ -2,15 +2,15 @@ package com.transactions.customer.application.use_case.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.transactions.customer.application.command.ClienteEventCommand;
 import com.transactions.customer.application.command.CreateClientCommand;
 import com.transactions.customer.application.command.UpdateClientCommand;
 import com.transactions.customer.application.mapper.ClienteAppMapper;
 import com.transactions.customer.application.use_case.service.ClienteUseCase;
-import com.transactions.customer.domain.dto.ClienteEvent;
+import com.transactions.customer.application.use_case.service.EventPublisherUseCase;
 import com.transactions.customer.domain.exception.ResourceNotFoundException;
 import com.transactions.customer.domain.model.Cliente;
 import com.transactions.customer.domain.port.out.ClienteRepositoryPort;
-import com.transactions.customer.infraestructure.adapter.out.kafka.ClienteProducer;
 
 import lombok.AllArgsConstructor;
 
@@ -20,22 +20,22 @@ public class ClienteService implements ClienteUseCase {
 
     private final ClienteAppMapper mapper;
 
-    private final ClienteProducer clienteProducer;
-
     private final ClienteRepositoryPort clienteRepository;
+
+    private final EventPublisherUseCase eventPublisherUseCase;
 
     @Override
     public Cliente create(CreateClientCommand command) {
         Cliente cliente = mapper.toDomain(command);
         Cliente saved = clienteRepository.create(cliente);
 
-        // TODO: corregir esto
-        ClienteEvent event = new ClienteEvent(
-                saved.getClienteId(),
-                saved.getNombre(),
-                saved.getEstado(),
-                "CREAR");
-        clienteProducer.sendClienteEvent(event);
+        ClienteEventCommand cmd = ClienteEventCommand.builder()
+                .accion("CREAR")
+                .clienteId(saved.getClienteId())
+                .nombre(saved.getNombre())
+                .estado(saved.getEstado()).build();
+
+        eventPublisherUseCase.publicaCliente(cmd);
 
         return saved;
 
@@ -50,13 +50,14 @@ public class ClienteService implements ClienteUseCase {
     @Override
     public void delete(String id) {
         clienteRepository.delete(id);
-        // Publicar evento en Kafka
-        ClienteEvent event = new ClienteEvent(
-                id,
-                null,
-                null,
-                "ELIMINAR");
-        clienteProducer.sendClienteEvent(event);
+
+        ClienteEventCommand cmd = ClienteEventCommand.builder()
+                .accion("ELIMINAR")
+                .clienteId(id)
+                .nombre(null)
+                .estado(null).build();
+
+        eventPublisherUseCase.publicaCliente(cmd);
     }
 
     @Override
