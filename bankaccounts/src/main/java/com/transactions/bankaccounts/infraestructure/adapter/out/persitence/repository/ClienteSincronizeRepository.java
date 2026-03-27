@@ -8,4 +8,6 @@ import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.enti
 
 public interface ClienteSincronizeRepository extends JpaRepository<ClientSincronizeEntity, String> {
     Optional<ClientSincronizeEntity> findByClienteId(String clienteId);
+
+    void deleteByClienteId(String clienteId);
 }

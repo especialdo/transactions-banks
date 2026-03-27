@@ -10,7 +10,7 @@ import com.transactions.bankaccounts.domain.model.Movimiento;
 import com.transactions.bankaccounts.domain.port.out.MovimientoRepositoryPort;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.entities.CuentaEntity;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.entities.MovimientoEntity;
-import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.mapper.CuentaMapper;
+import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.mapper.CuentaPersistenceMapper;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.mapper.MovimientoMapper;
 import com.transactions.bankaccounts.infraestructure.adapter.out.persitence.repository.MovimientoRepository;
 
@@ -24,7 +24,7 @@ public class MovimientoAdapterPersitence implements MovimientoRepositoryPort {
 
     private final MovimientoMapper mapper;
 
-    private final CuentaMapper cuentaMapper;
+    private final CuentaPersistenceMapper cuentaMapper;
 
     @Override
     public Movimiento guardar(Movimiento movimiento, Cuenta cuenta) {

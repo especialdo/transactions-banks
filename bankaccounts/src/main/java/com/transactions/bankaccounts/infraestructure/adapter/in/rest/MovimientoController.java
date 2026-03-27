@@ -29,11 +29,12 @@ public class MovimientoController {
     private final MovimientoRestMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Movimiento> registrar(@RequestBody MovimientoRequest request) {
+    public ResponseEntity<MovimientoResponse> registrar(@RequestBody MovimientoRequest request) {
         RegistrarMovimientoCommand command = new RegistrarMovimientoCommand(
                 request.numeroCuenta(),
                 request.valor());
-        return ResponseEntity.ok(registrarMovimientoUseCase.ejecutar(command));
+        Movimiento mov = registrarMovimientoUseCase.ejecutar(command);
+        return ResponseEntity.ok(mapper.toSingleResponse(mov));
     }
 
     @GetMapping("/reporte")
