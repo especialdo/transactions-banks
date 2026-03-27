@@ -132,6 +132,9 @@
 							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
+					<image>
+						<name>transactions/customer-service</name>
+					</image>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -145,6 +148,10 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.graalvm.buildtools</groupId>
+				<artifactId>native-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

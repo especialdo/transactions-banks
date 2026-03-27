@@ -1,9 +1,8 @@
 package com.transactions.customer.domain.port.out;
 
-import com.transactions.customer.domain.model.Cliente;
+import com.transactions.customer.domain.dto.ClienteEvent;
 
 public interface CustomerEventPublisherPort {
-    void publicarClienteCreado(Cliente cliente);
+    void publicarCliente(ClienteEvent event);
 
-    void publicarClienteActualizado(Cliente cliente);
 }
