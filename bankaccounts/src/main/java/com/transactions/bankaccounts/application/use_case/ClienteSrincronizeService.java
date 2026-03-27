@@ -28,4 +28,9 @@ public class ClienteSrincronizeService implements ClienteSrincronizeUseCase {
         return client.clienteById(id);
     }
 
+    @Override
+    public String findNombreClient(String id) {
+        return client.findNombeClient(id);
+    }
+
 }

@@ -8,4 +8,6 @@ public interface ClienteSrincronizeUseCase {
     void delete(String id);
 
     Boolean clienteById(String id);
+
+    String findNombreClient(String id);
 }

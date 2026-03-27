@@ -12,6 +12,7 @@ public class CuentaMapper {
     public Cuenta toDomain(CuentaEntity entity) {
         Cuenta cuenta = new Cuenta();
         cuenta.setId(entity.getId());
+        cuenta.setClienteId(entity.getClienteId());
         cuenta.setNumeroCuenta(entity.getNumeroCuenta());
         cuenta.setTipoCuenta(entity.getTipoCuenta());
         cuenta.setSaldo(entity.getSaldo());
@@ -19,14 +20,14 @@ public class CuentaMapper {
         return cuenta;
     }
 
-    public CuentaEntity toEntity(Cuenta domain, String clienteId) {
+    public CuentaEntity toEntity(Cuenta domain) {
         CuentaEntity entity = new CuentaEntity();
-        entity.setId(domain.getId() != null ? domain.getId() : UUID.randomUUID().toString());
+        entity.setId(domain.getId());
         entity.setNumeroCuenta(domain.getNumeroCuenta());
         entity.setTipoCuenta(domain.getTipoCuenta());
         entity.setSaldo(domain.getSaldo());
         entity.setEstado(domain.getEstado());
-        entity.setClienteId(clienteId);
+        entity.setClienteId(domain.getClienteId());
         return entity;
     }
 }

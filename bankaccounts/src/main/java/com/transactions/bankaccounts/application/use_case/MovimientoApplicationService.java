@@ -7,8 +7,7 @@ import com.transactions.bankaccounts.domain.exception.CuentaNotFoundException;
 import com.transactions.bankaccounts.domain.model.Cuenta;
 import com.transactions.bankaccounts.domain.model.Movimiento;
 import com.transactions.bankaccounts.domain.port.out.CuentaRepositoryPort;
-import com.transactions.bankaccounts.domain.port.out.MovimientoEvent;
-import com.transactions.bankaccounts.domain.port.out.MovimientoEventPort;
+
 import com.transactions.bankaccounts.domain.port.out.MovimientoRepositoryPort;
 import com.transactions.bankaccounts.domain.service.CuentaDomainService;
 
@@ -20,7 +19,6 @@ public class MovimientoApplicationService implements RegistrarMovimientoUseCase 
 
     private final CuentaRepositoryPort cuentaRepository;
     private final MovimientoRepositoryPort movimientoRepository;
-    private final MovimientoEventPort eventoPort;
 
     private final CuentaDomainService cuentaDomainService;
 
@@ -36,16 +34,7 @@ public class MovimientoApplicationService implements RegistrarMovimientoUseCase 
 
         // 3. persistir via puerto de salida
         cuentaRepository.guardar(cuenta);
-        Movimiento guardado = movimientoRepository.guardar(movimiento);
-
-        // 4. publicar evento Kafka via puerto de salida
-        eventoPort.publicarMovimiento(MovimientoEvent.builder()
-                .cuentaId(cuenta.getId())
-                .numeroCuenta(command.getNumeroCuenta())
-                .valor(command.getValor())
-                .saldo(movimiento.getSaldo())
-                .fecha(movimiento.getFecha())
-                .build());
+        Movimiento guardado = movimientoRepository.guardar(movimiento, cuenta);
 
         return guardado;
     }

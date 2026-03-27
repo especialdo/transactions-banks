@@ -8,4 +8,6 @@ public interface ClienteSrincronizeRepositoryPort {
     void delete(String id);
 
     Boolean clienteById(String id);
+
+    String findNombeClient(String id);
 }

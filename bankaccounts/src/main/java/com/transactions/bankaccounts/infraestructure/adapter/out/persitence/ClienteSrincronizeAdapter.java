@@ -31,7 +31,13 @@ public class ClienteSrincronizeAdapter implements ClienteSrincronizeRepositoryPo
 
     @Override
     public Boolean clienteById(String id) {
-        return repository.findById(id).isPresent();
+        return repository.findByClienteId(id).isPresent();
+    }
+
+    @Override
+    public String findNombeClient(String id) {
+        ClientSincronizeEntity c = repository.findByClienteId(id).orElseThrow(null);
+        return c.getNombre();
     }
 
 }
