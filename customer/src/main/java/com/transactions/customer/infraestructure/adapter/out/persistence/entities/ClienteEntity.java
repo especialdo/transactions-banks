@@ -1,10 +1,13 @@
 package com.transactions.customer.infraestructure.adapter.out.persistence.entities;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClienteEntity extends PersonaEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+
     private String clienteid;
 
     @Column(nullable = false)
@@ -27,4 +29,11 @@ public class ClienteEntity extends PersonaEntity {
 
     @Column(nullable = false)
     private Boolean estado;
+
+    @PrePersist
+    public void generateId() {
+        if (clienteid == null) {
+            clienteid = UUID.randomUUID().toString();
+        }
+    }
 }
